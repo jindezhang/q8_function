@@ -8,7 +8,7 @@ class my_btn : public QPushButton
 {
     Q_OBJECT
 public:
-    explicit my_btn(QWidget *parent = nullptr);
+    explicit my_btn(QString name,QWidget *parent = nullptr);
 
 signals:
     void send_val(QString val);
@@ -16,7 +16,7 @@ public slots:
     void on_click();
 
 private:
-    QPushButton *btn;
+
 };
 
 #endif // MY_BTN_H

@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <QString>
 #include "my_btn.h"
+#include <QMessageBox>
 
 //加号不代表正数，- 只有在首部才会不用括号代表负数
 namespace Ui {
@@ -39,6 +40,7 @@ private:
     Ui::MainWindow *ui;
     analysis *ana;
     void line_changeColor(bool b);
+    vector<QString> btn_name;
 };
 
 #endif // MAINWINDOW_H

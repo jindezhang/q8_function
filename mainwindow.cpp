@@ -6,11 +6,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    setWindowTitle("from RD330");
     //安装过滤事件
     init_btn();
 
     ana = new analysis();
+
+    btn_name.push_back("AST1");
+    btn_name.push_back("AST2");
+    btn_name.push_back("AST3");
 
 }
 
@@ -373,13 +377,13 @@ void MainWindow::pre_log(QString &str)
     QString tmp;
     tmp = str;
     int i = tmp.indexOf("log");
-    if(i == -1 )
+    if(i == -1 )//当log不存在的时候。
         return ;
 
     tmp = tmp.mid(i+1);
     qDebug()<<"tmp="<<tmp;
 
-    //只有一个log的时候,
+    //只有一个log的时候,因为已经第一个被截取了，所以再找不到log
     if(tmp.indexOf("log") == -1)
     {
         int l = 0;
@@ -484,14 +488,22 @@ void MainWindow::line_changeColor(bool b)
 
 void MainWindow::on_pushButton_clicked()
 {
+
     static int i = 0;
     QString text_line = ui->edit_btn_name->text();
-    if(text_line == "")
+    if(text_line == ""){
+        QMessageBox::information(this,"eorro","project name is null");
         return;
-    my_btn *btn = new  my_btn();
-    btn->setMinimumSize(60,40);
-    btn->setMaximumWidth(60);
-    btn->setText(text_line);
+    }
+    for(auto item : btn_name){
+        if(item == text_line){
+            QMessageBox::information(this,"inform","project name is exist");
+            return;
+        }
+    }
+    qDebug()<<"on_pushButton_clicked=";
+    my_btn *btn = new  my_btn(text_line);
+
 
     connect(btn, SIGNAL(send_val(QString)),this,SLOT(get_project(QString)));
 
@@ -501,7 +513,7 @@ void MainWindow::on_pushButton_clicked()
     //gridLayout->setRowMinimumHeight(i/3+2,40);
     i++;
 
-
+    btn_name.push_back(text_line);
 }
 
 void MainWindow::get_project(QString name)
